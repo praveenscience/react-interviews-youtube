@@ -1,4 +1,4 @@
-export default {
+const Questions = {
   ReactJS_Level1: [
     "React JS Question 1 for Level 1",
     "React JS Question 2 for Level 1",
@@ -20,3 +20,4 @@ export default {
     "Node JS Question 3 for Level 2"
   ]
 };
+export default Questions;
