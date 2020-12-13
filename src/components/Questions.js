@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import Card from "./Card";
 import QuestionBank from "../constants/Questions";
 import Question from "./Question";
+import Summary from "./Summary";
 
 const Questions = () => {
   const [SelectedVal, setSelectedVal] = useState([]);
+  const [summary, setSummary] = useState({});
   const LevelKeys = Object.keys(QuestionBank);
   const Levels = LevelKeys.map(l =>
     l.replace("_", " ").replace("JS", " JS -").replace("Level", "Level ")
@@ -13,6 +15,12 @@ const Questions = () => {
     (acc, cur) => [...acc, ...QuestionBank[cur]],
     []
   );
+  const handleClick = e => {
+    setSummary({
+      ...summary,
+      [e.target.name]: e.target.value
+    });
+  };
   const handleChange = e => {
     const { value } = e.target;
     if (SelectedVal.indexOf(value) > -1) {
@@ -40,11 +48,15 @@ const Questions = () => {
         ))}
       </Card>
       {SelectedVal.length > 0 && (
-        <Card Header="Questions" className="mt-3">
-          {AllQuestions.map((q, key) => (
-            <Question key={key} Que={q} />
-          ))}
-        </Card>
+        <>
+          <Card Header="Questions" className="mt-3">
+            {AllQuestions.map((q, key) => (
+              <Question key={key} Que={q} handleClick={handleClick} />
+            ))}
+          </Card>
+          <h3>Summary</h3>
+          <Summary summary={summary} />
+        </>
       )}
     </div>
   );
