@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import Card from "./Card";
 import QuestionBank from "../constants/Questions";
+import Question from "./Question";
 
 const Questions = () => {
   const [SelectedVal, setSelectedVal] = useState([]);
   const LevelKeys = Object.keys(QuestionBank);
   const Levels = LevelKeys.map(l =>
     l.replace("_", " ").replace("JS", " JS -").replace("Level", "Level ")
+  );
+  const AllQuestions = SelectedVal.reduce(
+    (acc, cur) => [...acc, ...QuestionBank[cur]],
+    []
   );
   const handleChange = e => {
     const { value } = e.target;
@@ -33,17 +38,14 @@ const Questions = () => {
             {val}
           </label>
         ))}
-        <pre className="mt-2 bg-light border rounded p-1">
-          {JSON.stringify(
-            SelectedVal.reduce(
-              (acc, cur) => [...acc, ...QuestionBank[cur]],
-              []
-            ),
-            null,
-            2
-          )}
-        </pre>
       </Card>
+      {SelectedVal.length > 0 && (
+        <Card Header="Questions" className="mt-3">
+          {AllQuestions.map((q, key) => (
+            <Question key={key} Que={q} />
+          ))}
+        </Card>
+      )}
     </div>
   );
 };
