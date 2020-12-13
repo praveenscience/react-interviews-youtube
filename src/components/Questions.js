@@ -34,7 +34,14 @@ const Questions = () => {
           </label>
         ))}
         <pre className="mt-2 bg-light border rounded p-1">
-          {JSON.stringify(SelectedVal, null, 2)}
+          {JSON.stringify(
+            SelectedVal.reduce(
+              (acc, cur) => [...acc, ...QuestionBank[cur]],
+              []
+            ),
+            null,
+            2
+          )}
         </pre>
       </Card>
     </div>
